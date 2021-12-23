@@ -10,13 +10,13 @@ license = "MIT"
 
 [dependencies]
 glob = { version = "0.3.0", optional = true }
-libc      = "0.2.97"
-cfg-if    = "1.0.0"
+libc = "0.2.97"
+cfg-if = "1.0.0"
 daemonize = "0.4.1"
-argh      = "0.1.5"
+clap = { version = "3.0.0-rc.7", features = ["derive"] }
 
 [build-dependencies]
-cc   = "1.0.68"
+cc = "1.0.68"
 libc = "0.2.97"
 
 [dev-dependencies]

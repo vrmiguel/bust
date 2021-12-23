@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use crate::cli::CommandLineArgs;
+use crate::cfg::Cli;
 use crate::error::Result;
 use crate::kill;
 use crate::memory;
@@ -17,7 +17,7 @@ pub struct Monitor {
     proc_buf: [u8; 50],
     buf: [u8; 100],
     status: MemoryStatus,
-    args: CommandLineArgs,
+    args: Cli,
 }
 
 impl Monitor {
@@ -59,7 +59,7 @@ impl Monitor {
         Duration::from_millis(time_to_sleep as u64)
     }
 
-    pub fn new(proc_buf: [u8; 50], mut buf: [u8; 100], args: CommandLineArgs) -> Result<Self> {
+    pub fn new(proc_buf: [u8; 50], mut buf: [u8; 100], args: Cli) -> Result<Self> {
         let memory_info = MemoryInfo::new()?;
         let status = if memory_info.available_ram_percent <= 15 {
             MemoryStatus::NearTerminal(memory::pressure::pressure_some_avg10(&mut buf)?)

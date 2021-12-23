@@ -1,10 +1,9 @@
-// use uname::Uname;
-
+use clap::Parser;
 use uname::Uname;
 
 use crate::{memory::lock_memory_pages, monitor::Monitor};
 
-mod cli;
+mod cfg;
 mod daemon;
 mod errno;
 mod error;
@@ -17,7 +16,8 @@ mod uname;
 mod utils;
 
 fn main() -> error::Result<()> {
-    let args: cli::CommandLineArgs = argh::from_env();
+    let args = cfg::Cli::parse();
+    println!("{:?}", args);
 
     // Show uname info and return the Linux version running
     let _linux_version = {
@@ -35,7 +35,7 @@ fn main() -> error::Result<()> {
     // Buffer for anything else
     let buf = [0_u8; 100];
 
-    if !args.no_daemon {
+    if !args.no_daemonize {
         // Daemonize current process
         println!("\nStarting daemonization process!");
         daemon::daemonize()?;
